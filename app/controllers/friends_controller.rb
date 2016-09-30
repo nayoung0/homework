@@ -32,5 +32,10 @@ class FriendsController < ApplicationController
     redirect_to :back  
   end
 
+  def f_unblock
+    @friend=User.find_by_nickname(params[:friend])
+    current_user.unblock_friend(@friend)
+    redirect_to :back  
+  end
   
 end

@@ -1,0 +1,26 @@
+
+      <%# @posts.each do |post| %>
+      <%# if post.range=="public" %>
+      <!--<p>-->
+        title: <%#= post.title %><br>
+        content: <%#= post.content %><br>
+      <!--</p>-->
+      <%# elsif post.range=="friend" %>
+        <%# if current_user.friends_with?(user) %>
+      <!--  <p>-->
+          title: <%#= post.title %><br>
+          content: <%#= post.content %><br>
+      <!--  </p>-->
+        <%# else %><%# end %>
+      <%# elsif post.range=="private" %>
+        <%# if current_user==user %>
+      <!--  <p>-->
+          title: <%#= post.title %><br>
+          content: <%#= post.content %><br>
+      <!--  </p>-->
+        <%# else %>
+        <%# end %>
+      <%# end %>
+      
+        
+      <%# end %>

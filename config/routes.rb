@@ -7,9 +7,18 @@ Rails.application.routes.draw do
   post '/friends/f_accept'
   post '/friends/f_decline'
   post '/friends/f_block'
-  resources :friends
+  post '/friends/f_unblock'
+  resources :friends do
+    post 'f_request'
+    post 'f_accept'
+    post 'f_decline'
+    post 'f_block'
+  end
 
   devise_for :users, :controllers => { registrations: 'registrations' }
+  
+  
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

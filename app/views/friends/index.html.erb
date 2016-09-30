@@ -1,31 +1,29 @@
 <div class="row">
-  <% @user.each do |user| %>
-    <%= user.email %>
-    <%= user.nickname %>
-    <form action="/friends/f_request" method="post">
-      <input type="hidden" name="friend" value="<%= user.nickname %>">
-      <button type="submit">친구추가</button>
-    </form>
-  <% end %>
+  <%= render "result" %>
 
-  <% @requested.each do |r| %>
-    <%= r.nickname %>
-    <form action="friends/f_accept" method="post">
-      <input type="hidden" name="friend" value="<%= r.nickname %>">
-      <button type="submit">accept</button>
-    </form>
-  <% end %>
-  <%= link_to 'home', home_index_path %>
+    
+  <!--<h5>my friends</h5>-->
+  <!--  <% @friends.each do |friend| %>-->
+  <!--    <%= friend.nickname %>-->
+  <!--    <% if current_user.friends_with?(friend) %>-->
+  <!--      <form action="/friends/f_block" method="post">-->
+  <!--        <input type="hidden" name="friend" value="<%= friend.nickname %>">-->
+  <!--        <button type="submit">blocking <%= friend.nickname %></button>-->
+  <!--      </form>-->
+  <!--    <% else %>-->
+  <!--      <form action="/friends/f_request" method="post">-->
+  <!--        <input type="hidden" name="friend" value="<%= friend.nickname %>">-->
+  <!--        <button type="submit">request <%= friend.nickname %></button>-->
+  <!--      </form>-->
+  <!--    <% end %>-->
+  <!--  <% end %>-->
+  <!--<>-->
+  <!--<% @requested.each do |r| %>-->
+  <!--  <%= r.nickname %>-->
+  <!--  <form action="friends/f_accept" method="post">-->
+  <!--    <input type="hidden" name="friend" value="<%= r.nickname %>">-->
+  <!--    <button type="submit">accept</button>-->
+  <!--  </form>-->
+  <!--<% end %>-->
 
-  <h5>친구 찾기</h5>
-  <%= render 'friends/search' %>
-
-  <!--<h3>my friends</h3>-->
-  <%# @friends.each do |f| %>
-    <%#= f.nickname %>
-    <!--<form action="/friend/f_request" method="post">-->
-    <!--  <input type="hidden" name="friend" value="<%#= f.nickname %>">-->
-    <!--  <button type="submit">친구 요청</button>-->
-    <!--</form>-->
-  <%# end %>
 </div>

@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem "cancan"
 gem 'has_friendship'
 gem 'devise'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

@@ -1,0 +1,36 @@
+<h5>result</h5>
+  <% @user.each do |user| %>
+  <ul class="collection">
+    <li class="collection-item avatar">
+      <i class="material-icons circle red">play_arrow</i>
+      <!--<img src="images/yuna.jpg" alt="" class="circle">-->
+      <span class="title"><%= user.nickname %></span>
+      <p>
+        <% if current_user.friends_with?(user) %>
+        <form action="/friends/f_block" method="post">
+          <input type="hidden" name="friend" value="<%= user.nickname %>">
+          <button type="submit" class="btn waves-effect waves-light">blocking <%= user.nickname %></button>
+        </form>
+        <% else %>
+        <form action="/friends/f_request" method="post">
+          <input type="hidden" name="friend" value="<%= user.nickname %>">
+          <button type="submit" class="btn waves-effect waves-light">request <%= user.nickname %></button>
+        </form>
+        <% end %>
+      </p>
+      <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+    </li>
+  </ul>
+  <% end %>
+  <!--    <%# if current_user.friends_with?(user) %>-->
+  <!--      <form action="/friends/f_block" method="post">-->
+  <!--        <input type="hidden" name="friend" value="<%#= user.nickname %>">-->
+  <!--        <button type="submit">blocking <%#= user.nickname %></button>-->
+  <!--      </form>-->
+  <!--    <%# else %>-->
+  <!--      <form action="/friends/f_request" method="post">-->
+  <!--        <input type="hidden" name="friend" value="<%#= user.nickname %>">-->
+  <!--        <button type="submit">request <%#= user.nickname %></button>-->
+  <!--      </form>-->
+  <!--    <%# end %>-->
+  <!--<%# end %>-->

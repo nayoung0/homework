@@ -20,6 +20,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
+  <div class="navbar-fixed">
+    <nav>
+      <div class="container">
+        <div class="nav-wrapper">
+          <a href="/home/index" class="brand-logo">home</a>
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li style="size:50"><%= render "friends/search" %></li>
+            <li><a href="/friends">my friend</a></li>
+            <li>
+              <% unless user_signed_in? %>
+                <%= link_to 'log in', new_user_session_path %>
+              <% else %>
+                <%= link_to 'log out', destroy_user_session_path, method: :delete, :data => {:confirm => 'Are you sure?'} %>
+              <% end %>                
+            </li>
+          </ul>
+        </div>  
+      </div>
+      
+    </nav>
+  </div>
   <!--Import jQuery before materialize.js-->
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script type="text/javascript" src="js/materialize.min.js"></script>

@@ -1,59 +1,97 @@
+<div class="row">
+  <div class="col s4">
+    <h5>내 정보</h5>
+    <p>nickname: <%= current_user.nickname %><br>
+    email: <%= current_user.email %></p>
+  </div>
 
-  <div class="row">
-    <div class="col s4">
-        <h5>내 정보</h5>
-        <p>nickname: <%= current_user.nickname %><br>
-        email: <%= current_user.email %></p>
-    </div>
-
-    <div class="col s4">
-      <h5>write</h5>
-    <!--rails-->  
-      <%= form_for @post, url: {action:"create"} do |f| %>
-        <%= f.text_field :title, autofocus:true, placeholder: "title" %>
-        <%= f.text_field :content, placeholder: "content" %>
-        <%= f.submit "Create" %>
-      <% end %>
-    <!--html-->
-      <!--<form action="/create" method="post">-->
-      <!--  <input type="text" name="title" placeholder="title"></input>-->
-      <!--  <input type="text" name="content" placeholder="content"></input>-->
-      <!--  <button type="submit">submit</button>-->
-      <!--</form>-->
-    <!--all posts-->
-      <h5>posts</h5>
-      <% @posts.each do |post| %>
-        <p>title: <%= post.title %><br>
-        content: <%= post.content %></p>
-      <% end %>
-
-    </div>
+  <div class="col s4">
+    <h5>write</h5>
+  <!--rails-->  
+    <%= form_for @post, url: {action:"create"} do |f| %>
+      <%= f.text_field :title, autofocus:true, placeholder: "title" %>
+      <%= f.text_field :content, placeholder: "content" %>
+      <%= f.text_field :range %>
+      <%= f.hidden_field :user_id, value: current_user.id %>
+      <%= f.submit "Create" %>
+    <% end %>
+  <!--html-->
+    <!--<form action="/create" method="post">-->
+    <!--  <input type="text" name="title" placeholder="title"></input>-->
+    <!--  <input type="text" name="content" placeholder="content"></input>-->
+    <!--  <button type="submit">submit</button>-->
+    <!--</form>-->
+  <!--all posts-->
+    <h5>posts</h5>
+    <% @posts.each do |post| %>
+    <p>
+      title: <%= post.title %><br>
+      content: <%= post.content %><br>
+      range: <%= post.range %><br>
+      id: <%= post.id %><br>
+      user id: <%= post.user_id %><br>
+      writer: <%= post.user.nickname %>
+    </p>     
+    <% end %>
     
-    <div class="col s4">
-      <h5>my friends</h5>
-      <% @friends.each do |friend| %>
-        <%= friend.nickname %>
-        <form action="/friends/f_block" method="post">
-          <input type="hidden" name="friend" value="<%= friend.nickname %>">
-          <button type="submit">blocking friend</button>
-        </form>
-      <% end %>
-      
-      <h5>requested friends</h5>
-        <% @requested.each do |r| %>
-          <%= r.nickname %>
-          <form action="friends/f_accept" method="post">
-            <input type="hidden" name="friend" value="<%= r.nickname %>">
-            <button type="submit">accept</button>
-          </form>
-        <% end %>
-        
-      <h5>find friends</h5>
-      <%= render 'friends/search' %><br>
-      <%= link_to "friends", friends_path %>
-    </div>
-    <%#= link_to "글쓰러가기", home_write_path, method: :get %>
-
-  <%= link_to 'log out', destroy_user_session_path, method: :delete, :data => {:confirm => 'Are you sure?'} %>
+    <%# @posts.each do |post| %>
+    <%# if post.range=="public" %>
+    <!--<p>-->
+      title: <%#= post.title %><br>
+      content: <%#= post.content %><br>
+    <!--</p>-->
+    <%# elsif post.range=="friend" %>
+      <%# if current_user.friends_with?(user) %>
+    <!--  <p>-->
+        title: <%#= post.title %><br>
+        content: <%#= post.content %><br>
+    <!--  </p>-->
+      <%# else %><%# end %>
+    <%# elsif post.range=="private" %>
+      <%# if current_user==user %>
+    <!--  <p>-->
+        title: <%#= post.title %><br>
+        content: <%#= post.content %><br>
+    <!--  </p>-->
+      <%# else %>
+      <%# end %>
+    <%# end %>
+    <%# end %>
+  </div>
   
+  <div class="col s4">
+    <h5>my friends</h5>
+    <% @friends.each do |friend| %>
+      <%= friend.nickname %>
+      <form action="/friends/f_block" method="post">
+        <input type="hidden" name="friend" value="<%= friend.nickname %>">
+        <button class="btn waves-effect waves-light" type="submit">blocking <%= friend.nickname %></button>
+      </form>
+    <% end %>
+    
+    <h5>requested friends</h5>
+    <% @requested.each do |requested| %>
+      <%= requested.nickname %>
+      <form action="/friends/f_accept" method="post">
+        <input type="hidden" name="friend" value="<%= requested.nickname %>">
+        <button class="btn waves-effect waves-light" type="submit">accept</button>
+      </form>
+    <% end %>
+    
+    <h5>pending friends</h5>
+    <% @pending.each do |pending| %>
+      <%= pending.nickname %><br>
+    <% end %>
+      
+    <h5>blocked friend</h5>
+    <% @blocked.each do |blocked| %>
+      <%= blocked.nickname %>
+      <form action="/friends/f_unblock" method="post">
+      <input type="hidden" name="friend" value="<%= blocked.nickname %>">
+        <button class="btn waves-effect waves-light" type="submit">unblock</button>
+      </form>
+    <% end %>
+  </div>
+  <%#= link_to "글쓰러가기", home_write_path, method: :get %>
+  <%#= link_to 'log out', destroy_user_session_path, method: :delete, :data => {:confirm => 'Are you sure?'} %>
 </div>
