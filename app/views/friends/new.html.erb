@@ -1,0 +1,8 @@
+<% @friend.each do |friend| %>
+  <!--<a href="/friends/new?search=#{<%= friend.nickname %>}"></a>-->
+  <%= friend.nickname %>
+  <form action="/friends/f_request" method="post">
+    <input type="hidden" name="friend" value="<%= friend.nickname %>">
+    <button type="submit">친구추가</button>
+  </form>
+<% end %>
