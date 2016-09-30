@@ -11,7 +11,8 @@
     <%= form_for @post, url: {action:"create"} do |f| %>
       <%= f.text_field :title, autofocus:true, placeholder: "title" %>
       <%= f.text_field :content, placeholder: "content" %>
-      <%= f.text_field :range %>
+      <%= f.text_field :range %>  
+      <%#= f.collection_select(:user_id, Post.all, :id, :range ) %>
       <%= f.hidden_field :user_id, value: current_user.id %>
       <%= f.submit "Create" %>
     <% end %>
@@ -22,41 +23,45 @@
     <!--  <button type="submit">submit</button>-->
     <!--</form>-->
   <!--all posts-->
-    <h5>posts</h5>
-    <% @posts.each do |post| %>
-    <p>
-      title: <%= post.title %><br>
-      content: <%= post.content %><br>
-      range: <%= post.range %><br>
-      id: <%= post.id %><br>
-      user id: <%= post.user_id %><br>
-      writer: <%= post.user.nickname %>
-    </p>     
-    <% end %>
+
     
-    <%# @posts.each do |post| %>
-    <%# if post.range=="public" %>
-    <!--<p>-->
-      title: <%#= post.title %><br>
-      content: <%#= post.content %><br>
-    <!--</p>-->
-    <%# elsif post.range=="friend" %>
-      <%# if current_user.friends_with?(user) %>
-    <!--  <p>-->
-        title: <%#= post.title %><br>
-        content: <%#= post.content %><br>
-    <!--  </p>-->
-      <%# else %><%# end %>
-    <%# elsif post.range=="private" %>
-      <%# if current_user==user %>
-    <!--  <p>-->
-        title: <%#= post.title %><br>
-        content: <%#= post.content %><br>
-    <!--  </p>-->
-      <%# else %>
-      <%# end %>
-    <%# end %>
-    <%# end %>
+    <% @posts.each do |post| %>
+      <% if post.range=="public" %>                       <!--if post's range is 'public', anyone can see it-->
+        <p>
+          title: <%= post.title %><br>
+          content: <%= post.content %><br>
+          writer: <%= post.user.nickname %><br>
+          range: <%= post.range %><br>
+        </p>
+        
+      <% elsif post.range=="friend" %>                     <!--if post's range is 'friend',-->
+        <% if current_user.friends_with?(post.user) %>     <!--writer's friend can see it-->
+          <p>
+            title: <%= post.title %><br>
+            content: <%= post.content %><br>
+            writer: <%= post.user.nickname %><br>
+            range: <%= post.range %><br>
+          </p>
+        <% elsif current_user==post.user %>                 <!--and writer can see it-->
+          <p>
+            title: <%= post.title %><br>
+            content: <%= post.content %><br>
+            writer: <%= post.user.nickname %><br>
+            range: <%= post.range %><br>
+          </p>
+        <% end %>
+        
+      <% elsif post.range=="private" %>                     <!--if post's range is 'private',-->
+        <% if current_user==post.user %>                    <!--only writer can see it-->
+          <p>
+            title: <%= post.title %><br>
+            content: <%= post.content %><br>
+            writer: <%= post.user.nickname %><br>
+            range: <%= post.range %><br>
+          </p>
+        <% else %><% end %>
+      <% end %>
+    <% end %>
   </div>
   
   <div class="col s4">
